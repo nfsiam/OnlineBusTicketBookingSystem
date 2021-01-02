@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket Booking</title>
+    <script src="/js/jquery-3.5.1.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/select2.min.js"></script>
+
+    <!-- <link rel="stylesheet" href="/css/sa2.min.css"> -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/select2.min.css">
+    <style>
+        @media (min-width: 800px) {
+            .container {
+                max-width: 800px;
+            }
+
+            hr {
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary shadow">
+        <div class="container">
+            <a class="navbar-brand" href="/#posts">OBTBS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
+                aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#posts" id="home"> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#create-post" id="create-post">Create Post</a>
+                    </li>
+                </ul>
+                <div class="form-inline my-2 my-lg-0">
+                    <ul class="navbar-nav mr-auto" id="login-out">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row" id="entry-page">
+        </div>
+        <div class="row" id="user-home-page" style="display: block;">
+        </div>
+
+    </div>
+    <script src="/js/cookie.js"></script>
+    <script src="/js/routing.js"></script>
+    <script src="/js/includes.js"></script>
+    <script src="/js/app.js"></script>
+
+    <script>
+        $('td').click(function () {
+            this.classList.add('bg-success');
+        })
+    </script>
+
+</body>
+
+</html>

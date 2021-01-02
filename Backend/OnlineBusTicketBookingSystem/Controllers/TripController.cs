@@ -1,4 +1,5 @@
 ﻿using OnlineBusTicketBookingSystem.Models;
+using OnlineBusTicketBookingSystem.Models.PostModels;
 using OnlineBusTicketBookingSystem.Repositories;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace OnlineBusTicketBookingSystem.Controllers
     {
         private TripRepository tripRepository = new TripRepository();
 
+        [Route("")]
         public IHttpActionResult Get()
         {
             return Ok(this.tripRepository.GetAll());
@@ -35,6 +37,14 @@ namespace OnlineBusTicketBookingSystem.Controllers
                     trips.Add(booking.Trip);
                 }
             }
+            return Ok(trips);
+        }
+
+        //[Route("search")]
+        [Route("~/api/trips/search")]
+        public IHttpActionResult PostSeacrhTrips(TripSearch trip)
+        {
+            List<Trip> trips = tripRepository.GetAll().Where(t => t.LocationFrom == trip.LocationFrom && t.LocationTo == trip.LocationTo && t.Timing == trip.JourneyDate).ToList();
             return Ok(trips);
         }
     }

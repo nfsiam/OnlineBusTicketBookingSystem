@@ -21,10 +21,10 @@
             //  to avoid creating duplicate seed data.
 
             context.Users.AddOrUpdate(x => x.UserId,
-                new User() { UserId = 1, Username = "jane", Name = "Jane Austen", Password = "1234" },
-                new User() { UserId = 2, Username = "charles", Name = "Charles Dickens", Password = "1234" },
-                new User() { UserId = 3, Username = "miguel", Name = "Miguel de Cervantes", Password = "1234" },
-                new User() { UserId = 4, Username = "siam", Name = "Nafiz Fuad Siam", Password = "1234" }
+                new User() { UserId = 1, Username = "jane", Name = "Jane Austen", Password = "1234" , UserType = "passanger"},
+                new User() { UserId = 2, Username = "charles", Name = "Charles Dickens", Password = "1234" , UserType = "passanger"},
+                new User() { UserId = 3, Username = "miguel", Name = "Miguel de Cervantes", Password = "1234" ,UserType = "vendor"},
+                new User() { UserId = 4, Username = "siam", Name = "Nafiz Fuad Siam", Password = "1234", UserType = "admin" }
             );
 
 
