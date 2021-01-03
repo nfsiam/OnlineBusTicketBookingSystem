@@ -1,5 +1,6 @@
 $(window).on('hashchange', function (e) {
     $('#entry-page').html('');
+    $('#user-home-page').html('');
     route();
 });
 
@@ -25,10 +26,16 @@ function route() {
         }
     }
     else if (getCookie('btoken') != "") {
-        console.log(4);
         $('#login-out').html(`<li class="nav-item" id="login-out"><a class="nav-link" href="#logout">Logout</a></li>`);
-        if (loc == '#home') {
+        if (loc == '#home' || loc == "") {
             loadUserHome();
+        } else if (loc.startsWith('#search-trips')) {
+            searchTrips(null);
+        } else if (loc == "#logout") {
+            setCookie("", "", "", 0);
+            window.location.hash = "login";
+        } else {
+            window.location.hash = "home";
         }
     }
 }

@@ -46,12 +46,21 @@ function tripSearchFormSubmit() {
         locationTo,
         journeyDate
     };
-    searchTrips(searchParams);
+    //searchTrips(searchParams);
+    window.location.hash = "search-trips/" + locationFrom + "/" + locationTo + "/" + journeyDate;
 }
 
 let tripList = null;
 function searchTrips(searchParams) {
-
+    console.log("in");
+    if (searchParams == null) {
+        const parts = window.location.hash.slice(1).split('/');
+        searchParams = {
+            locationFrom: parts[1],
+            locationTo: parts[2],
+            journeyDate: parts[3]
+        };
+    }
     $.ajax({
         url: "http://localhost:5757/api/trips/search",
         method: "POST",
@@ -75,10 +84,18 @@ function searchTrips(searchParams) {
 
 function displayTrips(trips) {
     $('#user-home-page').html(`<div class="col-md-12" id="trips-section"></div>`);
+    if (trips.length > 0) {
+        $('#trips-section').append(includeTripRowHeading());
+    }
     for (let i = 0; i < trips.length; i++) {
         console.log(trips[i]);
         appendTrip(trips[i]);
     }
+    // viewSeats(1);
+    currentlyViewingTripId = -1;
+    currentlyViewingTripFair = 0;
+    selectedSeatList = [];
+
 }
 function appendTrip(trip) {
     const tripPlate =
@@ -99,11 +116,19 @@ function viewSeats(id) {
 
     selectedSeatList = [];
     console.log(id);
-    if (currentlyViewingTripId != id) {
+    if (currentlyViewingTripId == -1) {
 
         $(`#trip-row-${currentlyViewingTripId}`).html('');
         $(`#trip-row-${id}`).html(includeViewSeats(tripList.find(o => o.tripId == id)));
         currentlyViewingTripId = id;
+    } else if (currentlyViewingTripId != id) {
+        $(`#trip-row-${currentlyViewingTripId}`).html('');
+        $(`#trip-row-${id}`).html(includeViewSeats(tripList.find(o => o.tripId == id)));
+        currentlyViewingTripId = id;
+    } else if (currentlyViewingTripId == id) {
+
+        $(`#trip-row-${currentlyViewingTripId}`).html('');
+        currentlyViewingTripId = -1;
     }
 }
 
@@ -129,6 +154,50 @@ function selectSeat(that, seat) {
 }
 
 
+function confirmBooking(tripId) {
+    console.log(tripId);
+    if (selectedSeatList.length < 1) {
+        alert("Please Select Seat(s)");
+    }
+    else {
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                url: "http://localhost:5757/api/bookings",
+                method: "POST",
+                headers: {
+                    Authorization: "Basic " + getCookie('btoken')
+                },
+                data: {
+                    tripId: tripId,
+                    seats: selectedSeatList
+                },
+                complete: function (xmlhttp, status) {
+                    if (xmlhttp.status == 401) {
+                        //alert("Invalid Request");
+                        setCookie("", "", "", 0);
+                        window.location.hash = "login";
+                    }
+                    else if (xmlhttp.status == 400) {
+                        alert("Invalid Request");
+                        window.location.href = window.location.href;
+                    }
+                    else if (xmlhttp.status == 409) {
+                        alert("Some of the seats maybe booked in between");
+                    }
+                    else if (xmlhttp.status == 200) {
+                        alert("Successfully Booked");
+                        window.location.hash = "home";
+                    }
+                    else {
+                        console.error(xmlhttp.status);
+                    }
+                }
+            });
+        }
+    }
+}
+
+
 
 $(document).ready(function () {
     $('#from-location-input').select2();
@@ -136,11 +205,13 @@ $(document).ready(function () {
 
     //test
 
-    const searchParams = {};
-    searchParams.locationFrom = "Sherpur";
-    searchParams.locationTo = "Dhaka";
-    searchParams.journeyDate = "2021-1-5";
-    searchTrips(searchParams);
+    // const searchParams = {};
+    // searchParams.locationFrom = "Sherpur";
+    // searchParams.locationTo = "Dhaka";
+    // searchParams.journeyDate = "2021-1-5";
+    // searchTrips(searchParams);
+
     //test
+    //viewSeats(1);
 
 });
