@@ -49,5 +49,39 @@ namespace OnlineBusTicketBookingSystem.Controllers
                 return Content(HttpStatusCode.BadRequest, new { Errors = errors });
             }
         }
+
+
+        [Route("vendor")]
+        public IHttpActionResult PostRegVendor(VendorReg vendor)
+        {
+            Dictionary<string, Dictionary<string, string>> keyValuePairs = this.userRepository.RegisterVendor(vendor);
+            if (ModelState.IsValid)
+            {
+                if (keyValuePairs.ContainsKey("Success"))
+                {
+                    return Created("", keyValuePairs["Success"]);
+                }
+                else if (keyValuePairs.ContainsKey("Errors"))
+                {
+                    return Content(HttpStatusCode.Conflict, new { Errors = keyValuePairs["Errors"] });
+                }
+                else
+                {
+                    return StatusCode(HttpStatusCode.BadRequest);
+                }
+            }
+            else
+            {
+                var errors = new Hashtable();
+                foreach (var pair in ModelState)
+                {
+                    if (pair.Value.Errors.Count > 0)
+                    {
+                        errors[pair.Key] = pair.Value.Errors.Select(error => error.ErrorMessage).ToList().ElementAt(0);
+                    }
+                }
+                return Content(HttpStatusCode.BadRequest, new { Errors = errors });
+            }
+        }
     }
 }

@@ -34,6 +34,16 @@ function validator(inputs) {
             $('#errName').html('');
         }
     }
+    if ('vendorName' in inputs) {
+
+        if (inputs.vendorName == '') {
+            $('#errVendorname').html('Vendor Name is required');
+            valid = false;
+        }
+        else {
+            $('#errVendorname').html('');
+        }
+    }
     if ('password' in inputs) {
 
         if (inputs.password == '') {

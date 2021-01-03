@@ -132,6 +132,7 @@
     <Compile Include="Models\PostModels\BookingSeat.cs" />
     <Compile Include="Models\PostModels\TripSearch.cs" />
     <Compile Include="Models\PostModels\UserReg.cs" />
+    <Compile Include="Models\PostModels\VendorReg.cs" />
     <Compile Include="Models\Trip.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />
