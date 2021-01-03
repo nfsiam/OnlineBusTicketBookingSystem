@@ -24,15 +24,34 @@ namespace OnlineBusTicketBookingSystem.Controllers
         {
             return Ok(this.tripRepository.Get(id));
         }
-        [Route("~/api/passangers/{id}/trips")]
-        public IHttpActionResult GetByPassangerId(int id)
+        [Route("~/api/passangers/{id}/trips/active")]
+        public IHttpActionResult GetActiveTripsByPassangerId(int id)
         {
             BookingRepository bookingRepository = new BookingRepository();
-            List<Booking> bookings =  bookingRepository.GetAll().Where(b => b.PassangerId == id).ToList();
+            List<Booking> bookings =  bookingRepository.GetAll().Where(b => b.PassangerId == id && b.Trip.Timing > DateTime.Now).ToList();
             List<Trip> trips = new List<Trip>();
+            //List<Trip> trips = tripRepository.GetAll().Where(t=>t.Bookings.Contains())
+
             foreach(var booking in bookings)
             {
                 if(!trips.Contains(booking.Trip))
+                {
+                    trips.Add(booking.Trip);
+                }
+            }
+            return Ok(trips);
+        }
+        [Route("~/api/passangers/{id}/trips/history")]
+        public IHttpActionResult GetTripHistoryByPassangerId(int id)
+        {
+            BookingRepository bookingRepository = new BookingRepository();
+            List<Booking> bookings = bookingRepository.GetAll().Where(b => b.PassangerId == id && b.Trip.Timing <= DateTime.Now).ToList();
+            List<Trip> trips = new List<Trip>();
+            //List<Trip> trips = tripRepository.GetAll().Where(t=>t.Bookings.Contains())
+
+            foreach (var booking in bookings)
+            {
+                if (!trips.Contains(booking.Trip))
                 {
                     trips.Add(booking.Trip);
                 }

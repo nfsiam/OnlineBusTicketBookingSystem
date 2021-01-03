@@ -17,24 +17,42 @@ function route() {
         console.log(3);
         if (loc == "#login") {
             $('#entry-page').html(includeLoginForm());
-        } else if (loc == "#register") {
+        }
+        else if (loc == "#register") {
 
             $('#entry-page').html(includeRegForm());
+        }
+        else if (loc == "#register-vendor") {
+
+            $('#entry-page').html(includeVendorRegForm());
         }
         else {
             window.location.hash = "login";
         }
     }
     else if (getCookie('btoken') != "") {
+
         $('#login-out').html(`<li class="nav-item" id="login-out"><a class="nav-link" href="#logout">Logout</a></li>`);
+
         if (loc == '#home' || loc == "") {
             loadUserHome();
-        } else if (loc.startsWith('#search-trips')) {
-            searchTrips(null);
-        } else if (loc == "#logout") {
+        }
+        else if (loc.startsWith('#search-trips')) {
+            searchTrips();
+        }
+        else if (loc == '#active-bookings') {
+            //loadUserHome();
+            showActiveBookings();
+        }
+        else if (loc == '#booking-history') {
+            //loadUserHome();
+            showBookingHistory();
+        }
+        else if (loc == "#logout") {
             setCookie("", "", "", 0);
             window.location.hash = "login";
-        } else {
+        }
+        else {
             window.location.hash = "home";
         }
     }

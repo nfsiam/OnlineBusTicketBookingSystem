@@ -102,6 +102,7 @@
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BusController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
@@ -120,12 +121,17 @@
     <Compile Include="Migrations\202101021306174_UserTypeAdded.designer.cs">
       <DependentUpon>202101021306174_UserTypeAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101031919540_UserEmailAdded.cs" />
+    <Compile Include="Migrations\202101031919540_UserEmailAdded.designer.cs">
+      <DependentUpon>202101031919540_UserEmailAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Bus.cs" />
     <Compile Include="Models\OnlineBusTicketBookingSystemDbContext.cs" />
     <Compile Include="Models\PostModels\BookingSeat.cs" />
     <Compile Include="Models\PostModels\TripSearch.cs" />
+    <Compile Include="Models\PostModels\UserReg.cs" />
     <Compile Include="Models\Trip.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />
@@ -159,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101021306174_UserTypeAdded.resx">
       <DependentUpon>202101021306174_UserTypeAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101031919540_UserEmailAdded.resx">
+      <DependentUpon>202101031919540_UserEmailAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

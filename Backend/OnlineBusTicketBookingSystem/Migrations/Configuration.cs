@@ -21,10 +21,10 @@
             //  to avoid creating duplicate seed data.
 
             context.Users.AddOrUpdate(x => x.UserId,
-                new User() { UserId = 1, Username = "jane", Name = "Jane Austen", Password = "1234" , UserType = "passanger"},
-                new User() { UserId = 2, Username = "charles", Name = "Charles Dickens", Password = "1234" , UserType = "passanger"},
-                new User() { UserId = 3, Username = "miguel", Name = "Miguel de Cervantes", Password = "1234" ,UserType = "vendor"},
-                new User() { UserId = 4, Username = "siam", Name = "Nafiz Fuad Siam", Password = "1234", UserType = "admin" }
+                new User() { UserId = 1, Username = "jane",Email="jane@mail.com", Name = "Jane Austen", Password = "1234" , UserType = "passanger"},
+                new User() { UserId = 2, Username = "charles", Email = "charles@mail.com", Name = "Charles Dickens", Password = "1234" , UserType = "passanger"},
+                new User() { UserId = 3, Username = "miguel", Email = "migule@mail.com", Name = "Miguel de Cervantes", Password = "1234" ,UserType = "vendor"},
+                new User() { UserId = 4, Username = "siam", Email = "siam@mail.com", Name = "Nafiz Fuad Siam", Password = "1234", UserType = "admin" }
             );
 
 
@@ -85,6 +85,14 @@
                     LocationFrom = "Sherpur",
                     LocationTo = "Dhaka",
                     Timing = new DateTime(2021, 1, 5)
+                },
+                new Trip()
+                {
+                    TripId = 3,
+                    BusId = 1,
+                    LocationFrom = "Sherpur",
+                    LocationTo = "Dhaka",
+                    Timing = new DateTime(2021, 1, 1)
                 }
             );
             context.Bookings.AddOrUpdate(b => b.BookingId,
@@ -119,6 +127,14 @@
                     TripId = 2,
                     BookingTime = new DateTime(2020, 1, 5),
                     Seat = "A4"
+                },
+                new Booking()
+                {
+                    BookingId = 5,
+                    PassangerId = 1,
+                    TripId = 3,
+                    BookingTime = new DateTime(2020, 1, 1),
+                    Seat = "A1"
                 }
             );
         }

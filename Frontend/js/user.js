@@ -1,34 +1,3 @@
-function loginSubmit() {
-    const username = $('#username-input').val().trim();
-    const password = $('#password-input').val().trim();
-
-    $.ajax({
-        url: "http://localhost:5757/api/login",
-        method: "POST",
-        data: {
-            username: username,
-            password: password
-        },
-        complete: function (xmlhttp, status) {
-            if (xmlhttp.status == 204) {
-                alert("No Records Found");
-            }
-            else if (xmlhttp.status == 200) {
-                const user = xmlhttp.responseJSON;
-                const base64 = btoa(username + ":" + password);
-                setCookie(base64, user.userId, user.userType, 3);
-                if (user.userType == "passanger") {
-                    window.location.hash = "home";
-                }
-            }
-            else {
-                console.error(xmlhttp.status);
-            }
-        }
-    });
-
-}
-
 function loadUserHome() {
     console.log(5);
     $('#user-home-page').html(includeTripSearchForm());
@@ -40,27 +9,29 @@ function tripSearchFormSubmit() {
     const locationFrom = $('#from-location-input').val();
     const locationTo = $('#to-location-input').val();
     const journeyDate = $('#journey-date-input').val();
-    //console.log(locationFrom, locationTo, journeyDate);
-    const searchParams = {
-        locationFrom,
-        locationTo,
-        journeyDate
-    };
-    //searchTrips(searchParams);
+    if (locationFrom == '' || locationTo == '' || journeyDate == '') {
+        alert("please fill out the information");
+        return;
+    }
+    // //console.log(locationFrom, locationTo, journeyDate);
+    // const searchParams = {
+    //     locationFrom,
+    //     locationTo,
+    //     journeyDate
+    // };
+    // //searchTrips(searchParams);
     window.location.hash = "search-trips/" + locationFrom + "/" + locationTo + "/" + journeyDate;
 }
 
 let tripList = null;
-function searchTrips(searchParams) {
-    console.log("in");
-    if (searchParams == null) {
-        const parts = window.location.hash.slice(1).split('/');
-        searchParams = {
-            locationFrom: parts[1],
-            locationTo: parts[2],
-            journeyDate: parts[3]
-        };
-    }
+function searchTrips() {
+    const parts = window.location.hash.slice(1).split('/');
+    const searchParams = {
+        locationFrom: parts[1],
+        locationTo: parts[2],
+        journeyDate: parts[3]
+    };
+
     $.ajax({
         url: "http://localhost:5757/api/trips/search",
         method: "POST",
@@ -98,12 +69,6 @@ function displayTrips(trips) {
 
 }
 function appendTrip(trip) {
-    const tripPlate =
-        `
-        <div>${trip.bus.vendor.vendorName}</div>
-    `
-        ;
-    // $('#trips-section').append(tripPlate);
     $('#trips-section').append(includeTripRow(trip));
 }
 
@@ -197,21 +162,47 @@ function confirmBooking(tripId) {
     }
 }
 
+////show active bookings
+
+function showActiveBookings() {
+    // return;
+    $.ajax({
+        url: "http://localhost:5757/api/passangers/" + getCookie('userId') + "/trips/active",
+        method: "GET",
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 204) {
+                alert("No Records Found");
+            }
+            else if (xmlhttp.status == 200) {
+                const data = xmlhttp.responseJSON;
+                tripList = data;
+                displayTrips(data);
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+}
 
 
-$(document).ready(function () {
-    $('#from-location-input').select2();
-    $('#to-location-input').select2();
-
-    //test
-
-    // const searchParams = {};
-    // searchParams.locationFrom = "Sherpur";
-    // searchParams.locationTo = "Dhaka";
-    // searchParams.journeyDate = "2021-1-5";
-    // searchTrips(searchParams);
-
-    //test
-    //viewSeats(1);
-
-});
+function showBookingHistory() {
+    // return;
+    $.ajax({
+        url: "http://localhost:5757/api/passangers/" + getCookie('userId') + "/trips/history",
+        method: "GET",
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 204) {
+                alert("No Records Found");
+            }
+            else if (xmlhttp.status == 200) {
+                const data = xmlhttp.responseJSON;
+                tripList = data;
+                displayTrips(data);
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+}

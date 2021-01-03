@@ -36,8 +36,8 @@ namespace OnlineBusTicketBookingSystem.Repositories
                             booking.PassangerId = user.UserId;
 
                             this.Insert(booking);
-                            return "success";
                         }
+                        return "success";
                     }
                     return "invalid request";
                 }
