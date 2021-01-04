@@ -51,9 +51,10 @@ function includeTripRow(trip) {
                 <div class="row no-gutters align-items-center">
                     <div class="col-md-2 col-sm-12 h-100">
                         <div class="text-xs font-weight-bold text-primary mb-1 mt-1 p-2 border-right">
-                            ${trip.bus.vendor.vendorName}
+                            ${trip.bus.vendor.vendorName} ${trip.bus.busName} [${trip.bus.busId}] - ${trip.tripId}
                             <br/>
-                            ${trip.bus.busType}
+                            <div class="text-secondary">${trip.bus.busType}</div>
+                            <div class="text-secondary">${trip.locationFrom} to ${trip.locationTo}</div>
                         </div>
                     </div>
                     <div class="col-md-2 col-sm-12 h-100">
@@ -93,6 +94,61 @@ function includeTripRow(trip) {
     return tripRow;
 }
 
+function includeTripDetails(trip) {
+    const datetime = new Date(trip.timing);
+    const tripRow =
+        `
+    <div class="col-md-12 mt-3">
+        <div class="card shadow h-100">
+            <div class="card-body border-left border-primary p-0">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-md-2 col-sm-12 h-100">
+                        <div class="text-xs font-weight-bold text-primary mb-1 mt-1 p-2 border-right">
+                            ${trip.bus.vendor.vendorName} ${trip.bus.busName} [${trip.bus.busId}] - ${trip.tripId}
+                            <br/>
+                            <div class="text-secondary">${trip.bus.busType}</div>
+                            <div class="text-secondary">${trip.locationFrom} to ${trip.locationTo}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12 h-100">
+                        <div class="text-xs font-weight-bold text-secondary mb-1 mt-1 p-2 border-right">
+                            Journey Date : ${datetime.toLocaleDateString('en-US')}
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12  h-100">
+                        <div class="text-xs font-weight-bold text-secondary mb-1 mt-1 p-2 border-right">
+                            Depurture Time : ${datetime.toLocaleTimeString('en-US')}
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12  h-100">
+                        <div class="text-xs font-weight-bold text-primary mb-1 mt-1 p-2 border-right">
+                            Available Seat : ${trip.bus.totalSeat - trip.bookings.length}
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12  h-100">
+                        <div class="text-xs font-weight-bold text-warning mb-1 mt-1 p-2 border-right">
+                            ${trip.bus.perSeatFair}
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12  h-100 d-flex justify-content-center">
+                        <button class="btn btn-primary btn-sm" onclick="getLocBack()">Back</button>
+                        <button class="btn btn-primary btn-sm ml-2" onclick="route()">Realod</button>
+                    </div>
+                </div>
+                <div class="row no-gutters" id="trip-row-${trip.tripId}">
+                        
+                    <!--here viewSeats will be inserted-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+        ;
+    return tripRow;
+}
+
+
 
 function includeViewSeats(trip) {
     console.log(trip);
@@ -127,16 +183,7 @@ function includeViewSeats(trip) {
                 </div>
 
             </div>
-            <div class="col-md-6">
-                <div class="row no-gutters align-items-between h-100">
-                    <div class="col-md-12 mini-cart">
-                        ${getCartStyle()}
-                    </div>
-                    <div class="col-md-12 align-self-end">
-                        <button class="btn btn-success btn-block" onclick="${getActionOnContinue()}(${trip.tripId})">Continue</button>
-                    </div>
-                </div>
-            </div>
+            ${minicartAddition(trip)}
         </div>
     </div>
 
@@ -208,28 +255,73 @@ function arrangeSeats(trip) {
 function checkBooking(seat, trip) {
     const bookings = trip.bookings;
     const obj = bookings.find(o => o.seat === seat);
+    if (window.location.hash.indexOf("booking-history/") == -1 && window.location.hash.indexOf("trip-history/") == -1) {
+        if (obj != null) {
+            console.log("passangerId", obj.passangerId);
+            console.log("userId", getCookie('userId'));
 
-    if (obj != null) {
-        console.log("passangerId", obj.passangerId);
-        console.log("userId", getCookie('userId'));
-
-        if (obj.seatStatus == "reserved" && getCookie('userType') == 'vendor') {
-            return `<button class="btn btn-danger btn-block" onclick="selectToRelease(this,'${seat}')">${seat}</button>`;
-        }
-        else if (obj.seatStatus == "reserved" && getCookie('userType') == 'vendor') {
-            return `<button class="btn btn-danger btn-block" disabled>${seat}</button>`;
-        }
-        else if (obj.passangerId == getCookie('userId')) {
-            return `<button class="btn btn-primary btn-block" disabled>${seat}</button>`;
+            if (obj.seatStatus == "reserved" && getCookie('userType') == 'vendor') {
+                return `<button class="btn btn-danger btn-block" onclick="selectToRelease(this,'${seat}')">${seat}</button>`;
+            }
+            else if (obj.seatStatus == "reserved" && getCookie('userType') == 'vendor') {
+                return `<button class="btn btn-danger btn-block" disabled>${seat}</button>`;
+            }
+            else if (obj.passangerId == getCookie('userId')) {
+                return `<button class="btn btn-primary btn-block" disabled>${seat}</button>`;
+            }
+            else {
+                return `<button class="btn btn-secondary btn-block" disabled>${seat}</button>`;
+            }
         }
         else {
-            return `<button class="btn btn-secondary btn-block" disabled>${seat}</button>`;
+
+            return `<button class="btn btn-light btn-block" onclick="selectSeat(this,'${seat}')">${seat}</button>`;
         }
     }
     else {
+        if (obj != null) {
+            console.log("passangerId", obj.passangerId);
+            console.log("userId", getCookie('userId'));
 
-        return `<button class="btn btn-light btn-block" onclick="selectSeat(this,'${seat}')">${seat}</button>`;
+            if (obj.seatStatus == "reserved" && getCookie('userType') == 'vendor') {
+                return `<button class="btn btn-danger btn-block">${seat}</button>`;
+            }
+            else if (obj.seatStatus == "reserved" && getCookie('userType') == 'vendor') {
+                return `<button class="btn btn-danger btn-block" disabled>${seat}</button>`;
+            }
+            else if (obj.passangerId == getCookie('userId')) {
+                return `<button class="btn btn-primary btn-block" disabled>${seat}</button>`;
+            }
+            else {
+                return `<button class="btn btn-secondary btn-block" disabled>${seat}</button>`;
+            }
+        }
+        else {
+
+            return `<button class="btn btn-light btn-block">${seat}</button>`;
+        }
     }
+}
+
+
+function minicartAddition(trip) {
+    if (window.location.hash.indexOf("booking-history/") == -1 && window.location.hash.indexOf("trip-history/") == -1) {
+        const mc =
+            `
+        <div class="col-md-6">
+            <div class="row no-gutters align-items-between h-100">
+                <div class="col-md-12 mini-cart">
+                    ${getCartStyle()}
+                </div>
+                <div class="col-md-12 align-self-end">
+                    <button class="btn btn-success btn-block" onclick="${getActionOnContinue()}(${trip.tripId})">Continue</button>
+                </div>
+            </div>
+        </div>
+        `;
+        return mc;
+    }
+    return '';
 }
 
 function getCartStyle() {

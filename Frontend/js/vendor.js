@@ -189,4 +189,27 @@ function loadActiveTrips() {
     });
 }
 
+function loadTripHistory() {
+    $.ajax({
+        url: `http://localhost:5757/api/vendors/${getCookie('vendorId')}/trips/history`,
+        method: "GET",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 204) {
+                alert("No Records Found");
+            }
+            else if (xmlhttp.status == 200) {
+                const data = xmlhttp.responseJSON;
+                tripList = data;
+                displayTrips(data);
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+}
+
 ///trip

@@ -1,5 +1,3 @@
-let currentlyViewingTripId = -1;
-let currentlyViewingTripFair = 0;
 let selectedSeatList = [];
 let selectedSeatListToRelease = [];
 
@@ -15,8 +13,6 @@ function displayTrips(trips) {
         appendTrip(trips[i]);
     }
 
-    currentlyViewingTripId = -1;
-    currentlyViewingTripFair = 0;
     selectedSeatList = [];
     selectedSeatListToRelease = [];
 }
@@ -25,25 +21,53 @@ function appendTrip(trip) {
     $('#trips-section').append(includeTripRow(trip));
 }
 
-function viewSeats(id) {
 
+function viewSeats(id) {
     selectedSeatList = [];
     selectedSeatListToRelease = [];
-    console.log(id);
-    if (currentlyViewingTripId == -1) {
+    window.location.hash = window.location.hash + '/' + id;
+}
 
-        $(`#trip-row-${currentlyViewingTripId}`).html('');
-        $(`#trip-row-${id}`).html(includeViewSeats(tripList.find(o => o.tripId == id)));
-        currentlyViewingTripId = id;
-    } else if (currentlyViewingTripId != id) {
-        $(`#trip-row-${currentlyViewingTripId}`).html('');
-        $(`#trip-row-${id}`).html(includeViewSeats(tripList.find(o => o.tripId == id)));
-        currentlyViewingTripId = id;
-    } else if (currentlyViewingTripId == id) {
+function loadSeatDetails(id) {
+    selectedSeatList = [];
+    selectedSeatListToRelease = [];
+    $.ajax({
+        url: "http://localhost:5757/api/trips/" + id,
+        method: "GET",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 401) {
+                clearCookie();
+                window.location.hash = "login";
+            }
+            else if (xmlhttp.status == 404) {
+                alert("Invalid Request");
+                window.location.href = window.location.href;
+            }
+            else if (xmlhttp.status == 200) {
+                //alert("Successfully Booked");
+                //window.location.hash = "home";
+                const data = xmlhttp.responseJSON;
+                showSeats(data);
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+}
 
-        $(`#trip-row-${currentlyViewingTripId}`).html('');
-        currentlyViewingTripId = -1;
-    }
+function showSeats(trip) {
+    $('#main-body').html(includeTripDetails(trip));
+    $(`#trip-row-${trip.tripId}`).html(includeViewSeats(trip));
+}
+
+function getLocBack() {
+    const loc = window.location.hash;
+    const parts = loc.slice(1).split('/');
+    window.location.hash = parts[0];
 }
 
 function selectSeat(that, seat) {
@@ -129,14 +153,16 @@ function confirmBooking(tripId) {
                     }
                     else if (xmlhttp.status == 400) {
                         alert("Invalid Request");
-                        window.location.href = window.location.href;
+                        //window.location.href = window.location.href;
+                        location.reload();
                     }
                     else if (xmlhttp.status == 409) {
                         alert("Some of the seats maybe booked in between");
+                        route();
                     }
                     else if (xmlhttp.status == 200) {
                         alert("Successfully Booked");
-                        window.location.hash = "home";
+                        window.location.hash = "active-bookings";
                     }
                     else {
                         console.error(xmlhttp.status);
@@ -182,6 +208,7 @@ function confirmReservation(tripId) {
                 }
                 else if (xmlhttp.status == 400) {
                     alert("Invalid Request");
+                    location.reload();
                 }
                 else if (xmlhttp.status == 409) {
                     alert("Some of the seats maybe booked in between");
@@ -218,7 +245,7 @@ function confirmRelease(tripId) {
                 }
                 else if (xmlhttp.status == 400) {
                     alert("Invalid Request");
-                    route();
+                    location.reload();
                 }
                 else if (xmlhttp.status == 409) {
                     alert("Some of the seats maybe booked in between");
@@ -236,7 +263,7 @@ function confirmRelease(tripId) {
                 }
                 else {
                     console.error(xmlhttp.status);
-                    route();
+                    location.reload();
                 }
             }
         });

@@ -51,9 +51,17 @@ function route() {
             //loadUserHome();
             showActiveBookings();
         }
+        else if (loc.startsWith('#active-bookings/')) {
+            const parts = loc.slice(1).split('/');
+            loadSeatDetails(parts[1]);
+        }
         else if (loc == '#booking-history') {
             //loadUserHome();
             showBookingHistory();
+        }
+        else if (loc.startsWith('#booking-history/')) {
+            const parts = loc.slice(1).split('/');
+            loadSeatDetails(parts[1]);
         }
         else if (loc == '#active-buses') {
             //loadUserHome();
@@ -70,6 +78,18 @@ function route() {
         else if (loc == '#active-trips') {
             //loadUserHome();
             loadActiveTrips();
+        }
+        else if (loc.startsWith('#active-trips/')) {
+            const parts = loc.slice(1).split('/');
+            loadSeatDetails(parts[1]);
+        }
+        else if (loc == '#trip-history') {
+            //loadUserHome();
+            loadTripHistory();
+        }
+        else if (loc.startsWith('#trip-history/')) {
+            const parts = loc.slice(1).split('/');
+            loadSeatDetails(parts[1]);
         }
         else if (loc == "#logout") {
             clearCookie();
