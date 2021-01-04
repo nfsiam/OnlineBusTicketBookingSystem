@@ -39,5 +39,40 @@ namespace OnlineBusTicketBookingSystem.Controllers
                 return Ok(bookingSeat);
             }
         }
+        [Route("reserve")]
+        public IHttpActionResult PostReserveSeat(BookingSeat bookingSeat)
+        {
+            var res = bookingRepository.ConfirmReserving(bookingSeat, Request.Properties["vendor"] as Vendor);
+            if(res == "invalid request")
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            else if(res == "already booked")
+            {
+                return StatusCode(HttpStatusCode.Conflict);
+            }
+            else
+            {
+                return Ok(bookingSeat);
+            }
+        }
+
+        [Route("release")]
+        public IHttpActionResult PostReleaseSeat(BookingSeat bookingSeat)
+        {
+            var res = bookingRepository.ConfirmReleasing(bookingSeat, Request.Properties["vendor"] as Vendor);
+            if (res == "invalid request")
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            else if (res == "already booked")
+            {
+                return StatusCode(HttpStatusCode.Conflict);
+            }
+            else
+            {
+                return Ok(bookingSeat);
+            }
+        }
     }
 }

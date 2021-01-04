@@ -133,6 +133,10 @@
     <Compile Include="Migrations\202101041205519_BusModelChange.designer.cs">
       <DependentUpon>202101041205519_BusModelChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101041829167_SeatStatusPropAddedToBooking.cs" />
+    <Compile Include="Migrations\202101041829167_SeatStatusPropAddedToBooking.designer.cs">
+      <DependentUpon>202101041829167_SeatStatusPropAddedToBooking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Bus.cs" />
@@ -184,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101041205519_BusModelChange.resx">
       <DependentUpon>202101041205519_BusModelChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041829167_SeatStatusPropAddedToBooking.resx">
+      <DependentUpon>202101041829167_SeatStatusPropAddedToBooking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

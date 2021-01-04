@@ -1,4 +1,5 @@
-﻿using OnlineBusTicketBookingSystem.Models;
+﻿using OnlineBusTicketBookingSystem.Attributes;
+using OnlineBusTicketBookingSystem.Models;
 using OnlineBusTicketBookingSystem.Models.PostModels;
 using OnlineBusTicketBookingSystem.Repositories;
 using System;
@@ -65,6 +66,21 @@ namespace OnlineBusTicketBookingSystem.Controllers
         {
             List<Trip> trips = tripRepository.GetAll().Where(t => t.LocationFrom == trip.LocationFrom && t.LocationTo == trip.LocationTo && t.Timing == trip.JourneyDate).ToList();
             return Ok(trips);
+        }
+
+        [Route("~/api/vendors/{id}/trips/active"),BasicAuth]
+        public IHttpActionResult GetTripsByVendorId(int id)
+        {
+            Vendor vendor = Request.Properties["vendor"] as Vendor;
+            var trips = this.tripRepository.GetAll().Where(t => t.Bus.VendorId == vendor.VendorId && t.Timing > DateTime.Now).ToList();
+            if(trips.Count > 0)
+            {
+                return Ok(trips);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
     }
 }

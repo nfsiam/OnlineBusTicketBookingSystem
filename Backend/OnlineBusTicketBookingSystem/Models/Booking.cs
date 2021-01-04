@@ -19,5 +19,6 @@ namespace OnlineBusTicketBookingSystem.Models
         //[JsonIgnore]
         public virtual Trip Trip { get; set; }
         public string Seat { get; set; }
+        public string SeatStatus { get; set; }
     }
 }

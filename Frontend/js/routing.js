@@ -67,6 +67,10 @@ function route() {
             //loadUserHome();
             loadAddBusPage();
         }
+        else if (loc == '#active-trips') {
+            //loadUserHome();
+            loadActiveTrips();
+        }
         else if (loc == "#logout") {
             clearCookie();
             $('.links').html('');

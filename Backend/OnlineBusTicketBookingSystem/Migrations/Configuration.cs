@@ -83,7 +83,7 @@
                     BusId = 1,
                     LocationFrom = "Sherpur",
                     LocationTo = "Dhaka",
-                    Timing = new DateTime(2021, 1, 5)
+                    Timing = new DateTime(2021, 1, 6)
                 },
                 new Trip()
                 {
@@ -91,7 +91,7 @@
                     BusId = 2,
                     LocationFrom = "Sherpur",
                     LocationTo = "Dhaka",
-                    Timing = new DateTime(2021, 1, 5)
+                    Timing = new DateTime(2021, 1, 6)
                 },
                 new Trip()
                 {

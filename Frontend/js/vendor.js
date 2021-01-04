@@ -1,3 +1,4 @@
+///bus
 function loadActiveBusesPage() {
     $('#main-body').html(includeActiveBusePage());
 
@@ -160,3 +161,32 @@ function addBus() {
         }
     });
 }
+///bus
+
+
+///trip
+
+function loadActiveTrips() {
+    $.ajax({
+        url: `http://localhost:5757/api/vendors/${getCookie('vendorId')}/trips/active`,
+        method: "GET",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 204) {
+                alert("No Records Found");
+            }
+            else if (xmlhttp.status == 200) {
+                const data = xmlhttp.responseJSON;
+                tripList = data;
+                displayTrips(data);
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+}
+
+///trip
