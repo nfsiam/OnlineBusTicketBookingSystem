@@ -76,3 +76,49 @@ function validator(inputs) {
     return valid;
 
 }
+
+function addBusValidator(inputs) {
+    let valid = true;
+
+    if ('busName' in inputs) {
+
+        if (inputs.busName == '') {
+            $('#errBusName').html('Bus Name is required');
+            valid = false;
+        }
+        else {
+            $('#errBusName').html('');
+        }
+    }
+    if ('busType' in inputs) {
+
+        if (inputs.busType == '') {
+            $('#errBusType').html('Bus Type is required');
+            valid = false;
+        }
+        else {
+            $('#errBusType').html('');
+        }
+    }
+    if ('totalSeat' in inputs) {
+
+        if (inputs.totalSeat == '') {
+            $('#errTotalSeat').html('Total Seat number is required');
+            valid = false;
+        }
+        else {
+            $('#errTotalSeat').html('');
+        }
+    }
+    if ('perSeatFair' in inputs) {
+
+        if (inputs.perSeatFair == '') {
+            $('#errPerSeatFair').html('Per seat fair is required');
+            valid = false;
+        }
+        else {
+            $('#errPerSeatFair').html('');
+        }
+    }
+    return valid;
+}

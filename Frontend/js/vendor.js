@@ -55,7 +55,7 @@ function archiveBus(busId) {
 }
 
 function loadArchivedBusesPage() {
-    $('#main-body').html(includeArchivedBusePage());
+    $('#main-body').html(includeArchivedBusesPage());
 
     $.ajax({
         url: "http://localhost:5757/api/vendors/" + getCookie('vendorId') + "/buses/archives",
@@ -101,6 +101,58 @@ function restoreBus(busId) {
             if (xmlhttp.status == 200) {
                 // appendBuses(data);
                 $(`#bus-row-${busId}`).fadeOut();
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+}
+
+function loadAddBusPage() {
+    $('#main-body').html(includeAddBusPage());
+}
+
+function addBus() {
+    const busName = $('#bus-name-input').val().trim();
+    const busType = $('#bus-type-input').val().trim();
+    const totalSeat = $('#total-seat-input').val().trim();
+    const perSeatFair = $('#per-seat-fair-input').val().trim();
+
+    const inputs = {
+        busName,
+        busType,
+        totalSeat,
+        perSeatFair,
+    }
+    console.log(inputs);
+    if (addBusValidator(inputs) === false) {
+        return;
+    }
+    $.ajax({
+        url: "http://localhost:5757/api/buses",
+        method: "POST",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
+        data: inputs,
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 201) {
+                console.log("success");
+                if (confirm('Bus Added Successfully')) {
+                    window.location.hash = "active-buses";
+                }
+            }
+            else if (xmlhttp.status == 400 || xmlhttp.status == 409) {
+                const data = xmlhttp.responseJSON;
+                //console.log(data);
+                if ('errors' in data) {
+                    const errors = data.errors;
+                    for (const key of Object.keys(errors)) {
+                        const idProp = key.split('.');
+                        $(`#err${idProp[1]}`).html(errors[key]);
+                    }
+                }
             }
             else {
                 console.error(xmlhttp.status);

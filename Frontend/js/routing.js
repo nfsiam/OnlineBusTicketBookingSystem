@@ -63,6 +63,10 @@ function route() {
             //loadUserHome();
             loadArchivedBusesPage();
         }
+        else if (loc == '#add-bus') {
+            //loadUserHome();
+            loadAddBusPage();
+        }
         else if (loc == "#logout") {
             clearCookie();
             $('.links').html('');

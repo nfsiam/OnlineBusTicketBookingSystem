@@ -138,6 +138,7 @@
     <Compile Include="Models\Bus.cs" />
     <Compile Include="Models\OnlineBusTicketBookingSystemDbContext.cs" />
     <Compile Include="Models\PostModels\BookingSeat.cs" />
+    <Compile Include="Models\PostModels\BusAdd.cs" />
     <Compile Include="Models\PostModels\TripSearch.cs" />
     <Compile Include="Models\PostModels\UserReg.cs" />
     <Compile Include="Models\PostModels\VendorReg.cs" />

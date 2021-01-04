@@ -17,86 +17,48 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" placeholder="search bus">
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-block btn-success">Add Bus</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 my-3 buses-section">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card shadow mb-3 rounded bg-white">
-                            <div class="card-body pb-0 pt-2">
-                                <div class="d-flex justify-content-between align-items-center pb-2">
-                                    <div class="">
-                                        <div class="h6 m-0 text-success font-weight-bold">Bus Name</div>
-                                    </div>
-                                    <div class="">
-                                        <button class=" btn btn-white text-warning p-0 font-weight-bold">Edit</button>
-                                    </div>
-                                </div>
-                                <table class="table table-bordered table-sm text-center">
-                                    <tr>
-                                        <td>32 Seats</td>
-                                        <td>AC</td>
-                                        <td>Pers eat Fair 300</td>
-                                    </tr>
-                                </table>
-                            </div>
+            <div class="col-md-12 mt-3">
+                <div class="login-form">
+                    <div>
+                        <h2 class="text-center">Add Bus</h2>
+                        <div class="form-group">
+                            <label for="bus-name-input" class="form-label">Bus Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. Volvo" required="required"
+                                id="bus-name-input">
+                            <small id="errBusName" class="text-warning"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="bus-type-input" class="form-label">Bus Type</label>
+                            <select id="bus-type-input" class="form-control">
+                                <option value="">Select</option>
+                                <option value="AC">AC</option>
+                                <option value="NON AC">AC</option>
+                            </select>
+                            <small id="errBusType" class="text-warning"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="total-seat-input" class="form-label">Total Seats</label>
+                            <select id="total-seat-input" class="form-control">
+                                <option value="">Select</option>
+                                <option value="32">32</option>
+                                <option value="40">40</option>
+                            </select>
+                            <small id="errTotalSeat" class="text-warning"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="per-seat-fair-input" class="form-label">Per Seat Fair</label>
+                            <input type="number" class="form-control" placeholder="e.g. Volvo" required="required"
+                                id="per-seat-fair-input">
+                            <small id="errPerSeatFair" class="text-warning"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"
+                                onclick="vendorRegSubmit()">Apply</button>
                         </div>
                     </div>
-
-
-                    <div class="col-md-12">
-                        <div class="card shadow mb-3 rounded bg-white">
-                            <div class="card-body pb-0 pt-2">
-                                <div class="d-flex justify-content-between align-items-center pb-2">
-                                    <div class="">
-                                        <div class="h6 m-0 text-success font-weight-bold">Bus Name</div>
-                                    </div>
-                                    <div class="">
-                                        <button class=" btn btn-white text-warning p-0 font-weight-bold">Edit</button>
-                                    </div>
-                                </div>
-                                <table class="table table-bordered table-sm text-center">
-                                    <tr>
-                                        <td>32 Seats</td>
-                                        <td>AC</td>
-                                        <td>Pers eat Fair 300</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="card shadow mb-3 rounded bg-white">
-                            <div class="card-body pb-0 pt-2">
-                                <div class="d-flex justify-content-between align-items-center pb-2">
-                                    <div class="">
-                                        <div class="h6 m-0 text-success font-weight-bold">Bus Name</div>
-                                    </div>
-                                    <div class="">
-                                        <button class=" btn btn-white text-warning p-0 font-weight-bold">Edit</button>
-                                    </div>
-                                </div>
-                                <table class="table table-bordered table-sm text-center">
-                                    <tr>
-                                        <td>32 Seats</td>
-                                        <td>AC</td>
-                                        <td>Pers eat Fair 300</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    <p class="text-center"><a href="#login" class="text-success">Login Instead</a> | <a href="#register"
+                            class="text-danger">Register as a User</a></p>
                 </div>
             </div>
         </div>
