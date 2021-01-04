@@ -20,13 +20,19 @@ namespace OnlineBusTicketBookingSystem.Controllers
             return Ok(this.busRepository.GetAll());
         }
 
-        [Route("~/api/vendors/{id}/buses")]
+        [Route("~/api/vendors/{id}/buses/actives")]
         public IHttpActionResult GetAllByVendorId(int id)
         {
             return Ok(this.busRepository.GetAll().Where(b => b.VendorId == id && b.BusStatus != "archived"));
         }
-        
-        [Route("archive")]
+
+        [Route("~/api/vendors/{id}/buses/archives")]
+        public IHttpActionResult GetArchivedBuses(int id)
+        {
+            return Ok(this.busRepository.GetAll().Where(b => b.VendorId == id && b.BusStatus == "archived"));
+        }
+
+        [Route("~/api/vendors/{id}/buses/archives")]
         public IHttpActionResult PutBusIntoArchive(Bus bus)
         {
             if(bus == null)
@@ -38,6 +44,20 @@ namespace OnlineBusTicketBookingSystem.Controllers
                 return BadRequest();
             }
             return StatusCode(this.busRepository.ArchiveBus(bus, Request.Properties["vendor"] as Vendor));
+        }
+
+        [Route("~/api/vendors/{id}/buses/restore")]
+        public IHttpActionResult PutRestoreFromArchive(Bus bus)
+        {
+            if (bus == null)
+            {
+                return BadRequest();
+            }
+            else if (bus.BusId < 1)
+            {
+                return BadRequest();
+            }
+            return StatusCode(this.busRepository.RestoreBus(bus, Request.Properties["vendor"] as Vendor));
         }
     }
 }

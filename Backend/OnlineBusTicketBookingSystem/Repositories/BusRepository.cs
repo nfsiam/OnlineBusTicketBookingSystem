@@ -27,5 +27,24 @@ namespace OnlineBusTicketBookingSystem.Repositories
                 return HttpStatusCode.OK;
             }
         }
+
+        public HttpStatusCode RestoreBus(Bus bus, Vendor vendor)
+        {
+            Bus _bus = this.Get(bus.BusId);
+            if (_bus == null)
+            {
+                return HttpStatusCode.NotFound;
+            }
+            else if (_bus.VendorId != vendor.VendorId)
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+            else
+            {
+                _bus.BusStatus = "";
+                this.Update(_bus);
+                return HttpStatusCode.OK;
+            }
+        }
     }
 }

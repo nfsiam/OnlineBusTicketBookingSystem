@@ -136,10 +136,10 @@ function includeVendorNavLinks() {
         <a class="nav-link" href="/#vendor-home"> Home</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#manage-buses">Manage Buses</a>
+        <a class="nav-link" href="#active-buses">Active Buses</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#manage-trips">Manage Trips</a>
+        <a class="nav-link" href="#archived-buses">Archived Buses</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#active-trips">Active Trips</a>

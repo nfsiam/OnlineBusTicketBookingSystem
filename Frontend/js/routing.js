@@ -55,9 +55,13 @@ function route() {
             //loadUserHome();
             showBookingHistory();
         }
-        else if (loc == '#manage-buses') {
+        else if (loc == '#active-buses') {
             //loadUserHome();
-            loadManageBusesPage();
+            loadActiveBusesPage();
+        }
+        else if (loc == '#archived-buses') {
+            //loadUserHome();
+            loadArchivedBusesPage();
         }
         else if (loc == "#logout") {
             clearCookie();
@@ -69,7 +73,7 @@ function route() {
                 window.location.hash = "home";
             }
             else if (getCookie('userType') == 'vendor') {
-                window.location.hash = "manage-buses";
+                window.location.hash = "active-buses";
             }
         }
     }
