@@ -12,5 +12,8 @@ namespace OnlineBusTicketBookingSystem.Models
         public string VendorName { get; set; }
         [JsonIgnore]
         public virtual ICollection<Bus> Buses { get; set; }
+        public int? UserId { get; set; }
+        [JsonIgnore]
+        public virtual User User { get; set; }
     }
 }

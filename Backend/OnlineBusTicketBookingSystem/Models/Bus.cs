@@ -11,6 +11,8 @@ namespace OnlineBusTicketBookingSystem.Models
         public int BusId { get; set; }
         public int TotalSeat { get; set; }
         public string BusType { get; set; }
+        public string BusName { get; set; }
+        public string BusStatus { get; set; }
         public double PerSeatFair { get; set; }
         public int? VendorId { get; set; }
         //[JsonIgnore]

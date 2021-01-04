@@ -35,6 +35,10 @@ namespace OnlineBusTicketBookingSystem.Attributes
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
                     actionContext.Request.Properties.Add("user", user);
+                    if(user.UserType == "vendor")
+                    {
+                        actionContext.Request.Properties.Add("vendor", new VendorRepository().GetAll().Where(v=>v.UserId == user.UserId).FirstOrDefault());
+                    }
                 }
                 else
                 {

@@ -125,6 +125,14 @@
     <Compile Include="Migrations\202101031919540_UserEmailAdded.designer.cs">
       <DependentUpon>202101031919540_UserEmailAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101041042464_VendorModelChange.cs" />
+    <Compile Include="Migrations\202101041042464_VendorModelChange.designer.cs">
+      <DependentUpon>202101041042464_VendorModelChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101041205519_BusModelChange.cs" />
+    <Compile Include="Migrations\202101041205519_BusModelChange.designer.cs">
+      <DependentUpon>202101041205519_BusModelChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Bus.cs" />
@@ -169,6 +177,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101031919540_UserEmailAdded.resx">
       <DependentUpon>202101031919540_UserEmailAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041042464_VendorModelChange.resx">
+      <DependentUpon>202101041042464_VendorModelChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041205519_BusModelChange.resx">
+      <DependentUpon>202101041205519_BusModelChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

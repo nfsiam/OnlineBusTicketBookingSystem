@@ -21,8 +21,21 @@ namespace OnlineBusTicketBookingSystem.Controllers
             {
                 return StatusCode(HttpStatusCode.NoContent);
             }
+
             user.UserType = _user.UserType;
             user.UserId = _user.UserId;
+
+            if(user.UserType == "vendor")
+            {
+                var vendor = new
+                {
+                    UserId = _user.UserId,
+                    Username = _user.Username,
+                    UserType = _user.UserType,
+                    VendorId = new VendorRepository().GetAll().Where(v => v.UserId == _user.UserId).FirstOrDefault().VendorId
+                };
+                return Ok(vendor);
+            }
             return Ok(user);
         }
     }

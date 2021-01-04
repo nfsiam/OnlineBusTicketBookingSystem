@@ -104,3 +104,52 @@ function includeVendorRegForm() {
     `;
     return str;
 }
+
+
+function includeUserNavLinks() {
+    const links =
+        `
+    <li class="nav-item">
+        <a class="nav-link" href="/#home"> Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#active-bookings">Active Bookings</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#booking-history">Booking History</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#my-profile">My Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#support">Support</a>
+    </li>
+    `;
+    return links;
+}
+
+
+function includeVendorNavLinks() {
+    const links =
+        `
+    <li class="nav-item">
+        <a class="nav-link" href="/#vendor-home"> Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#manage-buses">Manage Buses</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#manage-trips">Manage Trips</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#active-trips">Active Trips</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#trip-history">Trip History</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#support">Support</a>
+    </li>
+    `;
+    return links;
+}

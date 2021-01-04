@@ -1,11 +1,13 @@
-function setCookie(cvalue, userId, userType, exdays) {
+function setCookie(cvalue, userId, userType, exdays, vendorId = "") {
 
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     var expires = "expires=" + d.toUTCString();
     document.cookie = "btoken=" + cvalue + ";" + expires + ";path=/";
     document.cookie = "userId=" + userId + ";" + expires + ";path=/";
-    document.cookie = "userTupe=" + userType + ";" + expires + ";path=/";
+    document.cookie = "userType=" + userType + ";" + expires + ";path=/";
+
+    document.cookie = "vendorId=" + vendorId + ";" + expires + ";path=/";
 }
 
 function getCookie(cname) {
@@ -22,4 +24,8 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+function clearCookie() {
+    setCookie("", "", "", 0, "");
 }

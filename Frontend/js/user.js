@@ -1,6 +1,6 @@
 function loadUserHome() {
     console.log(5);
-    $('#user-home-page').html(includeTripSearchForm());
+    $('#main-body').html(includeTripSearchForm());
     $('#from-location-input').select2();
     $('#to-location-input').select2();
 }
@@ -54,7 +54,7 @@ function searchTrips() {
 }
 
 function displayTrips(trips) {
-    $('#user-home-page').html(`<div class="col-md-12" id="trips-section"></div>`);
+    $('#main-body').html(`<div class="col-md-12" id="trips-section"></div>`);
     if (trips.length > 0) {
         $('#trips-section').append(includeTripRowHeading());
     }
@@ -139,7 +139,7 @@ function confirmBooking(tripId) {
                 complete: function (xmlhttp, status) {
                     if (xmlhttp.status == 401) {
                         //alert("Invalid Request");
-                        setCookie("", "", "", 0);
+                        clearCookie();
                         window.location.hash = "login";
                     }
                     else if (xmlhttp.status == 400) {

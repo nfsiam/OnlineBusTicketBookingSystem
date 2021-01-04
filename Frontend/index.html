@@ -28,29 +28,15 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary shadow">
         <div class="container">
-            <a class="navbar-brand" href="/">OBTBS</a>
+            <span class="navbar-brand">OBTBS</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
                 aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor03">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#home"> Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#active-bookings">Active Bookings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#booking-history">Booking History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#my-profile">My Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#support">Support</a>
-                    </li>
+                <ul class="navbar-nav mr-auto links">
+
                 </ul>
                 <div class="form-inline my-2 my-lg-0">
                     <ul class="navbar-nav mr-auto" id="login-out">
@@ -63,7 +49,7 @@
     <div class="container">
         <div class="row" id="entry-page">
         </div>
-        <div class="row" id="user-home-page" style="display: block;">
+        <div class="row" id="main-body" style="display: block;">
         </div>
 
     </div>
@@ -73,9 +59,11 @@
     <script src="/js/routing.js"></script>
     <script src="/js/includes/entry.js"></script>
     <script src="/js/includes/user.js"></script>
+    <script src="/js/includes/vendor.js"></script>
     <script src="/js/utils/validation.js"></script>
     <script src="/js/entry.js"></script>
     <script src="/js/user.js"></script>
+    <script src="/js/vendor.js"></script>
 
     <script>
         $('td').click(function () {

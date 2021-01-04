@@ -86,6 +86,7 @@ namespace OnlineBusTicketBookingSystem.Repositories
 
                 Vendor _vendor = new Vendor();
                 _vendor.VendorName = vendor.VendorName;
+                _vendor.UserId = _user.UserId;
 
                 this.vendorRepository.Insert(_vendor);
 

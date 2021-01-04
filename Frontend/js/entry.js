@@ -15,10 +15,15 @@ function loginSubmit() {
             }
             else if (xmlhttp.status == 200) {
                 const user = xmlhttp.responseJSON;
+                //console.log(user);
                 const base64 = btoa(username + ":" + password);
                 if (user.userType == "passanger") {
                     setCookie(base64, user.userId, user.userType, 3);
                     window.location.hash = "home";
+                }
+                else if (user.userType == "vendor") {
+                    setCookie(base64, user.userId, user.userType, 3, user.vendorId);
+                    window.location.hash = "vendor-home";
                 }
                 else if (user.userType == "pvendor") {
                     alert("Please wait until you get your aprroval email");

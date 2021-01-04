@@ -1,6 +1,6 @@
 $(window).on('hashchange', function (e) {
     $('#entry-page').html('');
-    $('#user-home-page').html('');
+    $('#main-body').html('');
     route();
 });
 
@@ -32,7 +32,14 @@ function route() {
     }
     else if (getCookie('btoken') != "") {
 
+        if (getCookie('userType') == "passanger") {
+            $('.links').html(includeUserNavLinks());
+        }
+        else if (getCookie('userType') == "vendor") {
+            $('.links').html(includeVendorNavLinks());
+        }
         $('#login-out').html(`<li class="nav-item" id="login-out"><a class="nav-link" href="#logout">Logout</a></li>`);
+
 
         if (loc == '#home' || loc == "") {
             loadUserHome();
@@ -48,12 +55,22 @@ function route() {
             //loadUserHome();
             showBookingHistory();
         }
+        else if (loc == '#manage-buses') {
+            //loadUserHome();
+            loadManageBusesPage();
+        }
         else if (loc == "#logout") {
-            setCookie("", "", "", 0);
+            clearCookie();
+            $('.links').html('');
             window.location.hash = "login";
         }
         else {
-            window.location.hash = "home";
+            if (getCookie('userType') == 'passanger') {
+                window.location.hash = "home";
+            }
+            else if (getCookie('userType') == 'vendor') {
+                window.location.hash = "manage-buses";
+            }
         }
     }
 }

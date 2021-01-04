@@ -23,21 +23,25 @@
             context.Users.AddOrUpdate(x => x.UserId,
                 new User() { UserId = 1, Username = "jane",Email="jane@mail.com", Name = "Jane Austen", Password = "1234" , UserType = "passanger"},
                 new User() { UserId = 2, Username = "charles", Email = "charles@mail.com", Name = "Charles Dickens", Password = "1234" , UserType = "passanger"},
-                new User() { UserId = 3, Username = "miguel", Email = "migule@mail.com", Name = "Miguel de Cervantes", Password = "1234" ,UserType = "vendor"},
-                new User() { UserId = 4, Username = "siam", Email = "siam@mail.com", Name = "Nafiz Fuad Siam", Password = "1234", UserType = "admin" }
+                new User() { UserId = 3, Username = "miguel", Email = "migule@mail.com", Name = "Miguel de Cervantes", Password = "1234" ,UserType = "admin"},
+                new User() { UserId = 4, Username = "siam", Email = "siam@mail.com", Name = "Nafiz Fuad Siam", Password = "1234", UserType = "admin" },
+                new User() { UserId = 5, Username = "ven1", Email = "ven1@mail.com", Name = "Vendor One", Password = "1234" ,UserType = "vendor"},
+                new User() { UserId = 6, Username = "ven2", Email = "ven2@mail.com", Name = "vendor Two", Password = "1234" ,UserType = "vendor"},
+                new User() { UserId = 7, Username = "ven3", Email = "ven3@mail.com", Name = "vendor Three", Password = "1234" ,UserType = "vendor"}
             );
 
 
             context.Vendors.AddOrUpdate(v => v.VendorId,
-                new Vendor() { VendorId = 1, VendorName = "AB Travels" },
-                new Vendor() { VendorId = 2, VendorName = "CD Travels" },
-                new Vendor() { VendorId = 3, VendorName = "EF Travels" }
+                new Vendor() { VendorId = 1, VendorName = "AB Travels", UserId = 5 },
+                new Vendor() { VendorId = 2, VendorName = "CD Travels", UserId =6 },
+                new Vendor() { VendorId = 3, VendorName = "EF Travels", UserId = 7 }
             );
 
             context.Buses.AddOrUpdate(b => b.BusId,
                 new Bus()
                 {
                     BusId = 1,
+                    BusName = "Hino",
                     TotalSeat = 20,
                     PerSeatFair = 300,
                     BusType = "NON AC",
@@ -46,6 +50,7 @@
                 new Bus()
                 {
                     BusId = 2,
+                    BusName = "Volvo",
                     TotalSeat = 20,
                     PerSeatFair = 500,
                     BusType = "AC",
@@ -54,6 +59,7 @@
                 new Bus()
                 {
                     BusId = 3,
+                    BusName = "1J",
                     TotalSeat = 20,
                     PerSeatFair = 600,
                     BusType = "AC",
@@ -62,6 +68,7 @@
                 new Bus()
                 {
                     BusId = 4,
+                    BusName = "Honda",
                     TotalSeat = 20,
                     PerSeatFair = 300,
                     BusType = "NON AC",
