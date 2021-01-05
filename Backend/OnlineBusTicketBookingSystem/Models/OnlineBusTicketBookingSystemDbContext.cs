@@ -28,6 +28,12 @@ namespace OnlineBusTicketBookingSystem.Models
                 .HasForeignKey(v => v.VendorId)
                 .WillCascadeOnDelete(true)
                 ;
+            modelBuilder.Entity<Trip>().HasKey<int>(k => k.TripId)
+                .HasOptional(v => v.Bus)
+                .WithMany(k => k.Trips)
+                .HasForeignKey(v => v.BusId)
+                .WillCascadeOnDelete(true)
+                ;
         }
     }
 }

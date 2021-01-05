@@ -22,10 +22,14 @@ namespace OnlineBusTicketBookingSystem
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
-                 = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
-            config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling
-                 = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+            //     = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+            //config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling
+            //     = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            config.Formatters.JsonFormatter
+            .SerializerSettings
+            .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             EnableCorsAttribute enableCorsAttribute = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(enableCorsAttribute);
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

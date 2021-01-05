@@ -212,4 +212,85 @@ function loadTripHistory() {
     });
 }
 
+function loadAddTripPage() {
+    $('#main-body').html(includeAddTripPage());
+    $('#bus-id-input').select2();
+    $('#from-location-input').select2();
+    $('#to-location-input').select2();
+    $.ajax({
+        url: "http://localhost:5757/api/vendors/" + getCookie('vendorId') + "/buses/actives",
+        method: "GET",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 200) {
+                const data = xmlhttp.responseJSON;
+                console.log(data);
+                populateSelectBus(data);
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+}
+
+function populateSelectBus(buses) {
+    for (let i = 0; i < buses.length; i++) {
+        const busElem = `<option value="${buses[i].busId}">${buses[i].busName} [${buses[i].busId}] | ${buses[i].busType} | ${buses[i].totalSeat} Seats | ${buses[i].perSeatFair} TK</option>`;
+        $('#bus-id-input').append(busElem);
+
+    }
+}
+
+function addTripFormSubmit() {
+    const busId = $('#bus-id-input').val().trim();
+    const locationFrom = $('#from-location-input').val().trim();
+    const locationTo = $('#to-location-input').val().trim();
+    const timing = $('#journey-date-input').val().trim();
+
+    const inputs = {
+        busId,
+        locationFrom,
+        locationTo,
+        timing
+    }
+    console.log(inputs);
+    if (addTripValidator(inputs) === false) {
+        return;
+    }
+    $.ajax({
+        url: "http://localhost:5757/api/trips",
+        method: "POST",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
+        data: inputs,
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 201) {
+                console.log("success");
+                alert("Trip Scheduled Successfully");
+                window.location.hash = "active-trips";
+            }
+            else if (xmlhttp.status == 400 || xmlhttp.status == 409) {
+                const data = xmlhttp.responseJSON;
+                //console.log(data);
+                if ('errors' in data) {
+                    const errors = data.errors;
+                    for (const key of Object.keys(errors)) {
+                        const idProp = key.split('.');
+                        $(`#err${idProp[1]}`).html(errors[key]);
+                    }
+                }
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+}
+
+
+
 ///trip

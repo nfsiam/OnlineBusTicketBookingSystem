@@ -1,4 +1,5 @@
 ﻿using OnlineBusTicketBookingSystem.Models;
+using OnlineBusTicketBookingSystem.Models.PostModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +9,43 @@ namespace OnlineBusTicketBookingSystem.Repositories
 {
     public class TripRepository:Repository<Trip>
     {
+        public Dictionary<string, Dictionary<string, string>> AddTrip(TripAdd trip, Vendor vendor)
+        {
+            Dictionary<string, Dictionary<string, string>> keyValuePairs = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, string> errors = new Dictionary<string, string>();
+            Bus bus = new BusRepository().Get(trip.BusId);
+            if(bus == null)
+            {
+                errors.Add("user.BusId", "Invalid Bus");
+            }
+            else if (bus.VendorId != vendor.VendorId)
+            {
+                errors.Add("user.BusId", "Invalid Bus");
+            }
+            if(trip.Timing <= DateTime.Now)
+            {
+                errors.Add("user.Timing", "Can not shedule a trip on a past date");
+            }
+            if(trip.LocationTo == trip.LocationFrom)
+            {
+                errors.Add("user.LocationTo", "Can not shedule a trip on same terminal");
+            }
+            if (errors.Count == 0)
+            {
+                Trip _trip = new Trip();
+                _trip.BusId = trip.BusId;
+                _trip.LocationFrom = trip.LocationFrom;
+                _trip.LocationTo = trip.LocationTo;
+                _trip.Timing = trip.Timing;
+
+                this.Insert(_trip);
+                keyValuePairs.Add("Success", new Dictionary<string, string>() { { "Msg", "Trip Scheduled successfully" } });
+            }
+            else
+            {
+                keyValuePairs.Add("Errors", errors);
+            }
+            return keyValuePairs;
+        }
     }
 }

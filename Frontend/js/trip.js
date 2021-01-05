@@ -67,7 +67,11 @@ function showSeats(trip) {
 function getLocBack() {
     const loc = window.location.hash;
     const parts = loc.slice(1).split('/');
-    window.location.hash = parts[0];
+    if (parts.length == 5) {
+        window.location.hash = `${parts[0]}/${parts[1]}/${parts[2]}/${parts[3]}`;
+    } else {
+        window.location.hash = parts[0];
+    }
 }
 
 function selectSeat(that, seat) {

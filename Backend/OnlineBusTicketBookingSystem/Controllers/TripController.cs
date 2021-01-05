@@ -3,6 +3,7 @@ using OnlineBusTicketBookingSystem.Models;
 using OnlineBusTicketBookingSystem.Models.PostModels;
 using OnlineBusTicketBookingSystem.Repositories;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -32,6 +33,41 @@ namespace OnlineBusTicketBookingSystem.Controllers
             }
             return StatusCode(HttpStatusCode.NotFound);
         }
+
+        [Route(""),BasicAuth]
+        public IHttpActionResult Post(TripAdd trip)
+        {
+            if (ModelState.IsValid)
+            {
+                var keyValuePairs = this.tripRepository.AddTrip(trip, Request.Properties["vendor"] as Vendor);
+
+                if (keyValuePairs.ContainsKey("Success"))
+                {
+                    return Created("", keyValuePairs["Success"]);
+                }
+                else if (keyValuePairs.ContainsKey("Errors"))
+                {
+                    return Content(HttpStatusCode.Conflict, new { Errors = keyValuePairs["Errors"] });
+                }
+                else
+                {
+                    return StatusCode(HttpStatusCode.BadRequest);
+                }
+            }
+            else
+            {
+                var errors = new Hashtable();
+                foreach (var pair in ModelState)
+                {
+                    if (pair.Value.Errors.Count > 0)
+                    {
+                        errors[pair.Key] = pair.Value.Errors.Select(error => error.ErrorMessage).ToList().ElementAt(0);
+                    }
+                }
+                return Content(HttpStatusCode.BadRequest, new { Errors = errors });
+            }
+        }
+
         [Route("~/api/passangers/{id}/trips/active")]
         public IHttpActionResult GetActiveTripsByPassangerId(int id)
         {
@@ -68,10 +104,11 @@ namespace OnlineBusTicketBookingSystem.Controllers
         }
 
         //[Route("search")]
-        [Route("~/api/trips/search")]
+        [Route("~/api/trips/search"),BasicAuth]
         public IHttpActionResult PostSeacrhTrips(TripSearch trip)
         {
             List<Trip> trips = tripRepository.GetAll().Where(t => t.LocationFrom == trip.LocationFrom && t.LocationTo == trip.LocationTo && t.Timing == trip.JourneyDate).ToList();
+            //List<Trip> trips = tripRepository.GetAll().ToList();
             return Ok(trips);
         }
 
@@ -79,8 +116,15 @@ namespace OnlineBusTicketBookingSystem.Controllers
         public IHttpActionResult GetTripsByVendorId(int id)
         {
             Vendor vendor = Request.Properties["vendor"] as Vendor;
-            var trips = this.tripRepository.GetAll().Where(t => t.Bus.VendorId == vendor.VendorId && t.Timing > DateTime.Now).ToList();
-            if(trips.Count > 0)
+            List<Trip> trips = tripRepository.GetAll().Where(t => t.Bus.VendorId == vendor.VendorId && t.Timing > DateTime.Now).ToList();
+
+            BusRepository busRepository = new BusRepository();
+
+            //foreach(var trip in trips)
+            //{
+            //    trip.Bus = busRepository.Get((int)trip.BusId);
+            //}
+            if (trips.Count > 0)
             {
                 return Ok(trips);
             }
@@ -93,7 +137,7 @@ namespace OnlineBusTicketBookingSystem.Controllers
         public IHttpActionResult GetTripHistoryByVendorId(int id)
         {
             Vendor vendor = Request.Properties["vendor"] as Vendor;
-            var trips = this.tripRepository.GetAll().Where(t => t.Bus.VendorId == vendor.VendorId && t.Timing <= DateTime.Now).ToList();
+            List<Trip> trips = this.tripRepository.GetAll().Where(t => t.Bus.VendorId == vendor.VendorId && t.Timing <= DateTime.Now).ToList();
             if (trips.Count > 0)
             {
                 return Ok(trips);

@@ -142,6 +142,9 @@ function includeVendorNavLinks() {
         <a class="nav-link" href="#archived-buses">Archived Buses</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="#add-trip">Add Trip</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="#active-trips">Active Trips</a>
     </li>
     <li class="nav-item">

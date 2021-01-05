@@ -45,7 +45,13 @@ function route() {
             loadUserHome();
         }
         else if (loc.startsWith('#search-trips')) {
-            searchTrips();
+            const parts = loc.slice(1).split('/');
+            if (parts.length == 4) {
+                searchTrips();
+            }
+            else {
+                loadSeatDetails(parts[4]);
+            }
         }
         else if (loc == '#active-bookings') {
             //loadUserHome();
@@ -74,6 +80,10 @@ function route() {
         else if (loc == '#add-bus') {
             //loadUserHome();
             loadAddBusPage();
+        }
+        else if (loc == '#add-trip') {
+            //loadUserHome();
+            loadAddTripPage();
         }
         else if (loc == '#active-trips') {
             //loadUserHome();

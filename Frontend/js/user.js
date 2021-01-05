@@ -35,6 +35,9 @@ function searchTrips() {
     $.ajax({
         url: "http://localhost:5757/api/trips/search",
         method: "POST",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
         data: searchParams,
         complete: function (xmlhttp, status) {
             if (xmlhttp.status == 204) {

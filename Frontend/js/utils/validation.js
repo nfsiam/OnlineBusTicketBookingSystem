@@ -122,3 +122,49 @@ function addBusValidator(inputs) {
     }
     return valid;
 }
+
+function addTripValidator(inputs) {
+    let valid = true;
+
+    if ('busId' in inputs) {
+
+        if (inputs.busId == '') {
+            $('#errBusId').html('Bus is required');
+            valid = false;
+        }
+        else {
+            $('#errBusId').html('');
+        }
+    }
+    if ('locationFrom' in inputs) {
+
+        if (inputs.locationFrom == '') {
+            $('#errLocationFrom').html('Location From is required');
+            valid = false;
+        }
+        else {
+            $('#errLocationFrom').html('');
+        }
+    }
+    if ('locationTo' in inputs) {
+
+        if (inputs.locationTo == '') {
+            $('#errLocationTo').html('Location To is required');
+            valid = false;
+        }
+        else {
+            $('#errLocationTo').html('');
+        }
+    }
+    if ('timing' in inputs) {
+
+        if (inputs.timing == '') {
+            $('#errTiming').html('Journey Date and Time is required');
+            valid = false;
+        }
+        else {
+            $('#errTiming').html('');
+        }
+    }
+    return valid;
+}

@@ -137,12 +137,17 @@
     <Compile Include="Migrations\202101041829167_SeatStatusPropAddedToBooking.designer.cs">
       <DependentUpon>202101041829167_SeatStatusPropAddedToBooking.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101050157433_AddedTripsinBus.cs" />
+    <Compile Include="Migrations\202101050157433_AddedTripsinBus.designer.cs">
+      <DependentUpon>202101050157433_AddedTripsinBus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Bus.cs" />
     <Compile Include="Models\OnlineBusTicketBookingSystemDbContext.cs" />
     <Compile Include="Models\PostModels\BookingSeat.cs" />
     <Compile Include="Models\PostModels\BusAdd.cs" />
+    <Compile Include="Models\PostModels\TripAdd.cs" />
     <Compile Include="Models\PostModels\TripSearch.cs" />
     <Compile Include="Models\PostModels\UserReg.cs" />
     <Compile Include="Models\PostModels\VendorReg.cs" />
@@ -191,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101041829167_SeatStatusPropAddedToBooking.resx">
       <DependentUpon>202101041829167_SeatStatusPropAddedToBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101050157433_AddedTripsinBus.resx">
+      <DependentUpon>202101050157433_AddedTripsinBus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -88,7 +88,7 @@
                 new Trip()
                 {
                     TripId = 2,
-                    BusId = 2,
+                    BusId = 1,
                     LocationFrom = "Sherpur",
                     LocationTo = "Dhaka",
                     Timing = new DateTime(2021, 1, 6)
