@@ -78,6 +78,7 @@ function includeTripRow(trip) {
                         </div>
                     </div>
                     <div class="col-md-2 col-sm-12  h-100 d-flex justify-content-center">
+                        ${getButtonIfTripDeletable(trip)}
                         <button class="btn btn-primary btn-sm" onclick="viewSeats(${trip.tripId})">View Seats</button>
                     </div>
                 </div>
@@ -92,6 +93,25 @@ function includeTripRow(trip) {
     `
         ;
     return tripRow;
+}
+
+function getButtonIfTripDeletable(trip) {
+    if (getCookie('userType') == 'vendor') {
+        const bookings = trip.bookings;
+        if (bookings.length == 0) {
+            return `<button class="btn btn-danger btn-sm mr-2" onclick="deleteTrip(${trip.tripId})">Delete Trip</button>`;
+        } else {
+            const reserved = bookings.filter(b => b.seatStatus === 'reserved');
+            const actual = bookings.length - reserved.length;
+            if (actual == 0) {
+                return `<button class="btn btn-danger btn-sm mr-2" onclick="deleteTrip(${trip.tripId})">Delete Trip</button>`;
+            }
+            else {
+                return '';
+            }
+        }
+    }
+    return '';
 }
 
 function includeTripDetails(trip) {

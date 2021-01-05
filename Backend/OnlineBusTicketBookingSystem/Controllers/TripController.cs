@@ -68,6 +68,48 @@ namespace OnlineBusTicketBookingSystem.Controllers
             }
         }
 
+        [Route("{id}"), BasicAuth]
+        public IHttpActionResult Delete(int id)
+        {
+            Trip trip = this.tripRepository.Get(id);
+            if(trip == null)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                Vendor vendor = Request.Properties["vendor"] as Vendor;
+                if (trip.Bus.VendorId != vendor.VendorId)
+                {
+                    return Unauthorized();
+                }
+                else
+                {
+                    int booked = trip.Bookings.Count;
+                    if(booked == 0)
+                    {
+                        this.tripRepository.Delete(id);
+                        return StatusCode(HttpStatusCode.NoContent);
+                    }
+                    else
+                    {
+                        int reserved = trip.Bookings.Where(b => b.SeatStatus == "reserved").ToList().Count;
+                        if((booked - reserved) == 0)
+                        {
+                            this.tripRepository.Delete(id);
+                            return StatusCode(HttpStatusCode.NoContent);
+                        }
+                        else
+                        {
+                            return Unauthorized();
+                        }
+
+                    }
+                    
+                }
+            }
+        }
+
         [Route("~/api/passangers/{id}/trips/active")]
         public IHttpActionResult GetActiveTripsByPassangerId(int id)
         {

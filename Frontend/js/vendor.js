@@ -291,6 +291,33 @@ function addTripFormSubmit() {
     });
 }
 
+function deleteTrip(tripId) {
+    if (confirm('Are you sure?')) {
+        $.ajax({
+            url: "http://localhost:5757/api/trips/" + tripId,
+            method: "DELETE",
+            headers: {
+                Authorization: "Basic " + getCookie('btoken')
+            },
+            complete: function (xmlhttp, status) {
+                if (xmlhttp.status == 204) {
+                    console.log("success");
+                    alert("Trip Deleted Successfully");
+                    route();
+                    //window.location.hash = "active-trips";
+                }
+                else if (xmlhttp.status == 400 || xmlhttp.status == 409) {
+                    alert('Something went wrong');
+                    route();
+                }
+                else {
+                    console.error(xmlhttp.status);
+                }
+            }
+        });
+    }
+}
+
 
 
 ///trip

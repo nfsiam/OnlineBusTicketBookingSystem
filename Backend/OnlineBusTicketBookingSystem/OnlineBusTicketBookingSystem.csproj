@@ -141,6 +141,10 @@
     <Compile Include="Migrations\202101050157433_AddedTripsinBus.designer.cs">
       <DependentUpon>202101050157433_AddedTripsinBus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101050333073_BookingCascadeDelete.cs" />
+    <Compile Include="Migrations\202101050333073_BookingCascadeDelete.designer.cs">
+      <DependentUpon>202101050333073_BookingCascadeDelete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Bus.cs" />
@@ -199,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101050157433_AddedTripsinBus.resx">
       <DependentUpon>202101050157433_AddedTripsinBus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101050333073_BookingCascadeDelete.resx">
+      <DependentUpon>202101050333073_BookingCascadeDelete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
