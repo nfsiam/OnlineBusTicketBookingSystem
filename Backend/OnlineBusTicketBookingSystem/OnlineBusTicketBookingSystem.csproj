@@ -103,6 +103,7 @@
     <Compile Include="Controllers\BusController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Models\PostModels\TripSearch.cs" />
     <Compile Include="Models\PostModels\UserReg.cs" />
     <Compile Include="Models\PostModels\VendorReg.cs" />
+    <Compile Include="Models\ResponseModel\PassangerReporting.cs" />
     <Compile Include="Models\Trip.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />

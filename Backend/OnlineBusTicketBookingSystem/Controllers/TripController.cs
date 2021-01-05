@@ -1,6 +1,7 @@
 ﻿using OnlineBusTicketBookingSystem.Attributes;
 using OnlineBusTicketBookingSystem.Models;
 using OnlineBusTicketBookingSystem.Models.PostModels;
+using OnlineBusTicketBookingSystem.Models.ResponseModel;
 using OnlineBusTicketBookingSystem.Repositories;
 using System;
 using System.Collections;
@@ -12,7 +13,7 @@ using System.Web.Http;
 
 namespace OnlineBusTicketBookingSystem.Controllers
 {
-    [RoutePrefix("api/trips")]
+    [RoutePrefix("api/trips"),BasicAuth]
     public class TripController : ApiController
     {
         private TripRepository tripRepository = new TripRepository();
@@ -34,7 +35,18 @@ namespace OnlineBusTicketBookingSystem.Controllers
             return StatusCode(HttpStatusCode.NotFound);
         }
 
-        [Route(""),BasicAuth]
+        [Route("{id}/passanger-reporting")]
+        public IHttpActionResult GetPassangerReportingByTripId(int id)
+        {
+            PassangerReporting passangerReporting = this.tripRepository.GetPassangerReporting(id);
+            if (passangerReporting != null)
+            {
+                return Ok(passangerReporting);
+            }
+            return StatusCode(HttpStatusCode.NotFound);
+        }
+
+        [Route("")]
         public IHttpActionResult Post(TripAdd trip)
         {
             if (ModelState.IsValid)
@@ -68,7 +80,7 @@ namespace OnlineBusTicketBookingSystem.Controllers
             }
         }
 
-        [Route("{id}"), BasicAuth]
+        [Route("{id}")]
         public IHttpActionResult Delete(int id)
         {
             Trip trip = this.tripRepository.Get(id);
@@ -146,7 +158,7 @@ namespace OnlineBusTicketBookingSystem.Controllers
         }
 
         //[Route("search")]
-        [Route("~/api/trips/search"),BasicAuth]
+        [Route("~/api/trips/search")]
         public IHttpActionResult PostSeacrhTrips(TripSearch trip)
         {
             List<Trip> trips = tripRepository.GetAll().Where(t => t.LocationFrom == trip.LocationFrom && t.LocationTo == trip.LocationTo && t.Timing == trip.JourneyDate).ToList();
@@ -154,7 +166,7 @@ namespace OnlineBusTicketBookingSystem.Controllers
             return Ok(trips);
         }
 
-        [Route("~/api/vendors/{id}/trips/active"),BasicAuth]
+        [Route("~/api/vendors/{id}/trips/active")]
         public IHttpActionResult GetTripsByVendorId(int id)
         {
             Vendor vendor = Request.Properties["vendor"] as Vendor;
@@ -175,7 +187,7 @@ namespace OnlineBusTicketBookingSystem.Controllers
                 return StatusCode(HttpStatusCode.NoContent);
             }
         }
-        [Route("~/api/vendors/{id}/trips/history"), BasicAuth]
+        [Route("~/api/vendors/{id}/trips/history")]
         public IHttpActionResult GetTripHistoryByVendorId(int id)
         {
             Vendor vendor = Request.Properties["vendor"] as Vendor;

@@ -206,3 +206,54 @@ function includeAddTripPage() {
     `;
     return fromTemplate;
 }
+
+
+function includeVendorHomePage() {
+    const fromTemplate =
+        `
+    <div class="col-md-12 mt-3">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Sales report</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand">
+                            <div class=""></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink">
+                            <div class=""></div>
+                        </div>
+                    </div>
+                    <canvas id="myAreaChart" width="1037" height="320" class="chartjs-render-monitor"
+                        style="display: block; width: 1037px; height: 320px;"></canvas>
+                </div>
+                <hr>
+                Sales Graph
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mt-3">
+
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Top 3 Bus Earning</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+            <div class="chart-pie pt-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="myPieChart" width="255" height="216" class="chartjs-render-monitor" style="display: block; width: 255px; height: 216px;"></canvas>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script src="/chart-area-demo.js"></script>
+    <script src="/chart-pie-demo.js"></script>
+    `;
+    return fromTemplate;
+}
+

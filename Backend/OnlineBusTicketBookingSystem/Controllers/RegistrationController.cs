@@ -20,9 +20,9 @@ namespace OnlineBusTicketBookingSystem.Controllers
         [Route("")]
         public IHttpActionResult PostRegUser(UserReg user)
         {
-            Dictionary<string,Dictionary<string,string>> keyValuePairs =  this.userRepository.RegisterUser(user);
             if(ModelState.IsValid)
             {
+                Dictionary<string,Dictionary<string,string>> keyValuePairs =  this.userRepository.RegisterUser(user);
                 if(keyValuePairs.ContainsKey("Success"))
                 {
                     return Created("", keyValuePairs["Success"]);
@@ -54,9 +54,9 @@ namespace OnlineBusTicketBookingSystem.Controllers
         [Route("vendor")]
         public IHttpActionResult PostRegVendor(VendorReg vendor)
         {
-            Dictionary<string, Dictionary<string, string>> keyValuePairs = this.userRepository.RegisterVendor(vendor);
             if (ModelState.IsValid)
             {
+                Dictionary<string, Dictionary<string, string>> keyValuePairs = this.userRepository.RegisterVendor(vendor);
                 if (keyValuePairs.ContainsKey("Success"))
                 {
                     return Created("", keyValuePairs["Success"]);

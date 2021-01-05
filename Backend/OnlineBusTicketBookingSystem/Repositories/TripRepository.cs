@@ -1,5 +1,6 @@
 ﻿using OnlineBusTicketBookingSystem.Models;
 using OnlineBusTicketBookingSystem.Models.PostModels;
+using OnlineBusTicketBookingSystem.Models.ResponseModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,48 @@ namespace OnlineBusTicketBookingSystem.Repositories
                 keyValuePairs.Add("Errors", errors);
             }
             return keyValuePairs;
+        }
+
+        public PassangerReporting GetPassangerReporting(int id)
+        {
+            Trip trip = this.Get(id);
+            PassangerReporting passangerReporting = new PassangerReporting();
+            passangerReporting.Bus = trip.Bus.Vendor.VendorName + " " + trip.Bus.BusName + " [" + trip.Bus.BusId + "] " + " - " + trip.TripId;
+            passangerReporting.JourneyDateTime = trip.Timing.ToString("dddd, dd MMMM yyyy");
+            passangerReporting.Path = trip.LocationFrom + " to " + trip.LocationTo;
+            passangerReporting.SoldSeat = trip.Bookings.Where(b => b.SeatStatus != "reserved").ToList().Count.ToString() + " / " + trip.Bus.TotalSeat;
+
+            passangerReporting.PassangerSeats = new List<PassangerSeat>();
+
+            var bookings = trip.Bookings.Where(b => b.SeatStatus != "reserved").ToList();
+            List<int> pids = new List<int>();
+
+            foreach(var booking in bookings)
+            {
+                if(!pids.Contains((int)booking.PassangerId))
+                {
+                    pids.Add((int)booking.PassangerId);
+                }
+            }
+            foreach(int pid in pids)
+            {
+                List<Booking> _pbookings = bookings.Where(b => b.PassangerId == pid).ToList();
+
+                PassangerSeat passangerSeat = new PassangerSeat();
+                passangerSeat.PassangerName = _pbookings.ElementAt(0).Passanger.Name;
+                passangerSeat.Seats = new List<string>();
+
+                foreach(var _pb in _pbookings)
+                {
+                    if(!passangerSeat.Seats.Contains(_pb.Seat))
+                    {
+                        passangerSeat.Seats.Add(_pb.Seat);
+                    }
+                }
+                passangerReporting.PassangerSeats.Add(passangerSeat);
+            }
+
+            return passangerReporting;
         }
     }
 }

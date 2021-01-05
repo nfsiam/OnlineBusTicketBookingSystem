@@ -13,13 +13,6 @@ function tripSearchFormSubmit() {
         alert("please fill out the information");
         return;
     }
-    // //console.log(locationFrom, locationTo, journeyDate);
-    // const searchParams = {
-    //     locationFrom,
-    //     locationTo,
-    //     journeyDate
-    // };
-    // //searchTrips(searchParams);
     window.location.hash = "search-trips/" + locationFrom + "/" + locationTo + "/" + journeyDate;
 }
 
@@ -62,6 +55,9 @@ function showActiveBookings() {
     $.ajax({
         url: "http://localhost:5757/api/passangers/" + getCookie('userId') + "/trips/active",
         method: "GET",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
         complete: function (xmlhttp, status) {
             if (xmlhttp.status == 204) {
                 alert("No Records Found");
@@ -84,6 +80,9 @@ function showBookingHistory() {
     $.ajax({
         url: "http://localhost:5757/api/passangers/" + getCookie('userId') + "/trips/history",
         method: "GET",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
         complete: function (xmlhttp, status) {
             if (xmlhttp.status == 204) {
                 alert("No Records Found");

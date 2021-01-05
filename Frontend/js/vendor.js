@@ -1,4 +1,30 @@
-///bus
+function loadVendorHome() {
+    $.ajax({
+        url: "http://localhost:5757/api/reports/vendors/" + getCookie('vendorId') + "/sales",
+        method: "GET",
+        headers: {
+            Authorization: "Basic " + getCookie('btoken')
+        },
+        complete: function (xmlhttp, status) {
+            if (xmlhttp.status == 200) {
+                const data = xmlhttp.responseJSON;
+                appendVendorHome(data);
+            }
+            else {
+                console.error(xmlhttp.status);
+            }
+        }
+    });
+
+}
+
+function appendVendorHome(data) {
+
+    $('#main-body').html(includeVendorHomePage());
+    drawChart(data.dates, data.sales);
+    drawPie(data.busList, data.earning);
+}
+
 function loadActiveBusesPage() {
     $('#main-body').html(includeActiveBusePage());
 
@@ -304,6 +330,30 @@ function deleteTrip(tripId) {
                     console.log("success");
                     alert("Trip Deleted Successfully");
                     route();
+                    //window.location.hash = "active-trips";
+                }
+                else if (xmlhttp.status == 400 || xmlhttp.status == 409) {
+                    alert('Something went wrong');
+                    route();
+                }
+                else {
+                    console.error(xmlhttp.status);
+                }
+            }
+        });
+    }
+}
+function viewDetailed(tripId) {
+    if (confirm('Are you sure?')) {
+        $.ajax({
+            url: "http://localhost:5757/api/trips/" + tripId + '/passanger-reporting',
+            method: "GET",
+            headers: {
+                Authorization: "Basic " + getCookie('btoken')
+            },
+            complete: function (xmlhttp, status) {
+                if (xmlhttp.status == 200) {
+                    console.log(xmlhttp.responseJSON);
                     //window.location.hash = "active-trips";
                 }
                 else if (xmlhttp.status == 400 || xmlhttp.status == 409) {

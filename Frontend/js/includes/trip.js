@@ -121,8 +121,8 @@ function includeTripDetails(trip) {
     <div class="col-md-12 mt-3">
         <div class="card shadow h-100">
             <div class="card-body border-left border-primary p-0">
-                <div class="row no-gutters align-items-center">
-                    <div class="col-md-2 col-sm-12 h-100">
+                <div class="row no-gutters align-items-start">
+                    <div class="col-md-4 col-sm-12 h-100">
                         <div class="text-xs font-weight-bold text-primary mb-1 mt-1 p-2 border-right">
                             ${trip.bus.vendor.vendorName} ${trip.bus.busName} [${trip.bus.busId}] - ${trip.tripId}
                             <br/>
@@ -150,10 +150,10 @@ function includeTripDetails(trip) {
                             ${trip.bus.perSeatFair}
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-12  h-100 d-flex justify-content-center">
-                        <button class="btn btn-primary btn-sm" onclick="getLocBack()">Back</button>
-                        <button class="btn btn-primary btn-sm ml-2" onclick="route()">Realod</button>
-                    </div>
+                    
+                </div>
+                <div class="row no-gutters align-items-center">
+                    ${getDetailedButton(trip.tripId)}
                 </div>
                 <div class="row no-gutters" id="trip-row-${trip.tripId}">
                         
@@ -166,6 +166,38 @@ function includeTripDetails(trip) {
     `
         ;
     return tripRow;
+}
+
+
+function getDetailedButton(tripId) {
+    if (getCookie('userType') == 'vendor') {
+        const bt =
+            `
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-block" onclick="getLocBack()">Back</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-block" onclick="route()">Realod</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-block" onclick="viewDetailed(${tripId})">Detailed Report</button>
+        </div>
+        
+        `;
+        return bt;
+    }
+
+    const bt =
+        `
+        <div class="col-md-6">
+            <button class="btn btn-primary btn-block" onclick="getLocBack()">Back</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary btn-block" onclick="route()">Realod</button>
+        </div>        
+        `;
+    return bt;
+
 }
 
 
